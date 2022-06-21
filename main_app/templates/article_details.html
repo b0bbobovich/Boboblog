@@ -67,7 +67,43 @@
         <small><a href="{% url 'login' %}">Login</a> to like</small> - {{ total_likes }} Likes
     {% endif %}
 
-    <br/><br/>
+    <br/><br/><br/>
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-2">
+          <img src="{{post.author.userprofile.profile_pics.url}}" class="img-fluid rounded-start">
+        </div>
+        <div class="col-md-10">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ post.author.first_name }}
+              {{ post.author.last_name }}
+            </h5>
+
+            <p class="small text-muted">
+                {% if post.author.userprofile.website_url %}
+                    <a href="{{ post.author.userprofile.website_url }}">Website</a>
+                {% endif %}
+
+                {% if post.author.userprofile.facebook_url %}
+                    | <a href="{{ post.author.userprofile.facebook_url }}">Facebook</a>
+                {% endif %}
+
+                {% if post.author.userprofile.instagram_url %}
+                    | <a href="{{ post.author.userprofile.instagram_url }}">Instagram</a>
+                {% endif %}
+
+                {% if post.author.userprofile.linkedin_url %}
+                    | <a href="{{ post.author.userprofile.linkedin_url }}">LinkedIn</a>
+                {% endif %}
+
+            </p>
+            <p class="card-text">{{ post.author.userprofile.bio }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
     <hr>
     <br/>
     <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
