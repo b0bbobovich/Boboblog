@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{post.title_tag}}
+{% endblock %}
+
+{% block content %}
+    <h1>{{post.title}}</h1>
+    <small>
+        {% if post.author.first_name and post.author.last_name %}
+            By: {{post.author.first_name}} {{post.author.last_name}}
+        {% else %}
+            By: {{post.author.username}}
+        {% endif %}
+        <br/>
+        {{post.publication_date}}
+    </small>
+    <br/>
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <a href="{% url 'update-post' post.pk %}">Edit</a>
+            |
+            <a href="{% url 'delete-post' post.pk %}">Delete</a>
+        {% endif %}
+    {% endif %}
+    <br/>
+    <hr>
+    <br/>
+    {{post.body|safe}}
+    <br/><br/>
+    {% if user.is_authenticated %}
+        <form action="{% url 'like-post' post.pk %}" method="POST">
+            {% csrf_token %}
+            {% if liked %}
+                <button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger"
+                >Unlike</button> - {{ total_likes }} Likes
+
+            {% else %}
+                <button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary"
+                >Like</button> - {{ total_likes }} Likes - {{ liked_people }}
+            {% endif %}
+        </form>
+    {% else %}
+        <small><a href="{% url 'login' %}">Login</a> to like</small> - {{ total_likes }} Likes
+    {% endif %}
+
+    <br/><br/>
+    <hr>
+    <br/>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+
+{% endblock %}

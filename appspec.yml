@@ -1,0 +1,21 @@
+version: 0.0
+os: linux
+files:
+ - source: /
+   destination: /home/ubuntu/boboblog_project/Boboblog
+permissions:
+  - object: /home/ubuntu/boboblog_project/Boboblog
+    owner: root
+    type:
+      - directory
+      - file
+file_exists_behavior: OVERWRITE
+hooks:
+  AfterInstall:
+   - location: scripts/install_app_dependencies.sh
+     timeout: 300
+     runas: root
+  ApplicationStart:
+   - location: scripts/start_server.sh
+     timeout: 300
+     runas: root
