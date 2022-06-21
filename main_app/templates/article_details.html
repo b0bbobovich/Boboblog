@@ -26,19 +26,42 @@
     <br/>
     <hr>
     <br/>
+    {% if post.header_image %}
+        <img src="{{ post.header_image.url }}">
+    {% endif %}
+    <br/>
+    <br/>
     {{post.body|safe}}
+
     <br/><br/>
     {% if user.is_authenticated %}
         <form action="{% url 'like-post' post.pk %}" method="POST">
             {% csrf_token %}
             {% if liked %}
                 <button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger"
-                >Unlike</button> - {{ total_likes }} Likes
-
+                >Unlike</button> - {{ total_likes }} Likes -
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Who liked it
+                </button>
             {% else %}
                 <button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary"
-                >Like</button> - {{ total_likes }} Likes - {{ liked_people }}
+                >Like</button> - {{ total_likes }} Likes -
+
+                <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Who liked it
+                </button>
             {% endif %}
+
+            <div class="collapse" id="collapseExample">
+                  <div class="card card-body">
+                    <ul>
+                    {% for person in liked_peoples %}
+                        <li>{{ person }}</li>
+                    {% endfor %}
+                    </ul>
+                  </div>
+            </div>
+
         </form>
     {% else %}
         <small><a href="{% url 'login' %}">Login</a> to like</small> - {{ total_likes }} Likes
@@ -51,3 +74,5 @@
 
 
 {% endblock %}
+
+

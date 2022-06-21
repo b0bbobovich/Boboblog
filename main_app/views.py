@@ -52,7 +52,7 @@ class ArticleDetail(DetailView):
         context = super(ArticleDetail, self).get_context_data(*args, **kwargs)
 
         stuff = get_object_or_404(my_models.Post, id=self.kwargs['pk'])
-        print(stuff.likes.all())
+        liked_peoples = stuff.likes.all()
         total_likes = stuff.total_likes()
 
         liked = False
@@ -62,7 +62,7 @@ class ArticleDetail(DetailView):
         context['catg_menu'] = catg_menu
         context['total_likes'] = total_likes
         context['liked'] = liked
-        #context['liked_peoples'] = liked_peoples
+        context['liked_peoples'] = liked_peoples
         return context
 
 

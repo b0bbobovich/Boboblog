@@ -9,7 +9,7 @@
     <h1>Add blog post</h1>
     <br/><br/>
     <div class="form-group">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
 
             {% csrf_token %}
             {{ form.media }}

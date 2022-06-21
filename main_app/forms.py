@@ -12,7 +12,7 @@ def get_choice_list():
 class PostForm(basic_forms.ModelForm):
     class Meta:
         model = my_models.Post
-        fields = ['title', 'title_tag', 'author', 'category', 'body', 'snippet']
+        fields = ['title', 'title_tag', 'author', 'category', 'body', 'snippet', 'header_image']
 
         widgets = {
             'title': basic_forms.TextInput(attrs={"class": 'form-control', 'placeholder': 'Enter the title of your post here'}),
