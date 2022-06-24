@@ -34,6 +34,7 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     bio = models.TextField()
@@ -43,7 +44,18 @@ class UserProfile(models.Model):
     instagram_url = models.CharField(max_length=255, null=True, blank=True)
     linkedin_url = models.CharField(max_length=255, null=True, blank=True)
 
-
-
     def __str__(self):
         return str(self.user)
+
+    def get_absolute_url(self):
+        return reverse('home')
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=250)
+    body = models.TextField()
+    datetime = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.post.title, self.name)

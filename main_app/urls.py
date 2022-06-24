@@ -11,4 +11,5 @@ urlpatterns = [
     path('category/<str:catg_name>/', my_views.Category, name='category'),
     path('category-list/', my_views.CategoryList, name='category-list'),
     path('like/<int:pk>/', my_views.Like, name='like-post'),
+    path('article/<int:pk>/comment/', my_views.AddComment.as_view(), name='add-comment'),
 ]

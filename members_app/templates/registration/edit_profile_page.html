@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit Profile Page!
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    {% if user.id == userprofile.user.id %}
+        <h1>Edit Profile Page</h1>
+        <br/><br/>
+        <br/><br/>
+
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-secondary">Update Profile Page</button>
+            </form>
+        </div>
+    {% else %}
+        <h2>You are not correct User to edit this page!</h2>
+    {% endif %}
+{% else %}
+    <h2>Login to your account to add new posts!</h2>
+    <br/><br/>
+    <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+{% endif %}
+{% endblock %}

@@ -16,7 +16,7 @@ class PostForm(basic_forms.ModelForm):
 
         widgets = {
             'title': basic_forms.TextInput(attrs={"class": 'form-control', 'placeholder': 'Enter the title of your post here'}),
-            'title_tag': basic_forms.TextInput(attrs={"class": 'form-control', 'placeholder': 'I don`t know what this field is doing yet'}),
+            'title_tag': basic_forms.TextInput(attrs={"class": 'form-control'}),
             'author': basic_forms.TextInput(attrs={"class": 'form-control', 'value': '', 'id': 'user_id', 'type': 'hidden'}),
             'category': basic_forms.Select(choices=get_choice_list(), attrs={"class": 'form-control'}),
             'body': basic_forms.Textarea(attrs={"class": 'form-control'}),
@@ -26,7 +26,7 @@ class PostForm(basic_forms.ModelForm):
 class EditForm(basic_forms.ModelForm):
     class Meta:
         model = my_models.Post
-        fields = ['title', 'title_tag', 'category', 'body', 'snippet']
+        fields = ['title', 'title_tag', 'category', 'body', 'snippet', 'header_image']
 
         widgets = {
             'title': basic_forms.TextInput(attrs={"class": 'form-control'}),
@@ -34,4 +34,16 @@ class EditForm(basic_forms.ModelForm):
             'category': basic_forms.Select(choices=get_choice_list(), attrs={"class": 'form-control'}),
             'body': basic_forms.Textarea(attrs={"class": 'form-control'}),
             'snippet': basic_forms.Textarea(attrs={"class": 'form-control'})
+        }
+
+
+class CommentForm(basic_forms.ModelForm):
+    class Meta:
+        model = my_models.Comment
+        fields = ['name', 'body']
+
+        widgets = {
+            'name': basic_forms.TextInput(attrs={"class": 'form-control'}),
+            'body': basic_forms.Textarea(attrs={"class": 'form-control'}),
+
         }

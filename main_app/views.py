@@ -119,4 +119,12 @@ class DeletePost(DeleteView):
             return render(request, 'delete_post.html')
 
 
+class AddComment(CreateView):
+    model = my_models.Comment
+    form_class = my_forms.CommentForm
+    template_name = 'add_comment.html'
+    success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)

@@ -31,43 +31,67 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
             {% if catg_menu %}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Categories
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for item in catg_menu %}
-                  <a class="dropdown-item" href="{% url 'category' item|slugify %}">{{ item }}</a>
-                {% endfor %}
-              </div>
-            </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Categories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% for item in catg_menu %}
+                    <a class="dropdown-item" href="{% url 'category' item|slugify %}">{{ item }}</a>
+                  {% endfor %}
+                </div>
+              </li>
 
             {% else %}
 
               <li class="nav-item">
-              <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
-            </li>
+                <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
+              </li>
 
             {% endif %}
 
             {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'add-post' %}">Add Post</a>
-            </li>
+              <li class="nav-item dropdown" >
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                  {{ user.username }}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{% url 'edit-profile' %}">Edit Settings</a></li>
+                  {% if user.userprofile.id %}
+                  <li><a class="dropdown-item" href="{% url 'edit-profile-page' user.userprofile.id %}">Edit Profile Page</a></li>
+                  <li><a class="dropdown-item" href="{% url 'show-profile-page' user.userprofile.id %}">Show Profile Page</a></li>
+                  {% else %}
+                  <li><a class="dropdown-item" href="{% url 'create-profile-page' %}">Create Profile Page</a></li>
+                  {% endif %}
+                </ul>
+              </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'add-category' %}">Create Category</a>
-            </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'edit-profile' %}">Edit Profile</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'add-post' %}">Add Post</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'add-category' %}">Create Category</a>
+              </li>
+
+
+
+
+            {% endif %}
+
+          </ul>
+
+          <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+
+          {% if user.is_authenticated %}
 
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
 
-            {% else %}
+          {% else %}
 
             <li class="nav-item">
               <a class="nav-link" href="{% url 'register' %}">Register</a>
@@ -77,9 +101,9 @@
               <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
 
-            {% endif %}
-
+          {% endif %}
           </ul>
+
         </div>
       </div>
     </nav>
