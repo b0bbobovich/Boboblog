@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -117,10 +117,6 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
 MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
-
-STATICFILES_DIRS = [
-    os.path.join(STATIC_ROOT, 'static')
-]
 
 
 # Default primary key field type
