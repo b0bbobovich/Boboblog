@@ -2,33 +2,69 @@
 
 {% block content %}
 
-<h1>POSTS</h1>
+<div class="container-fluid">
+    <div class="row my-4">
+        {% for post in object_list %}
+            <div class="col-sm-3 d-flex mb-3">
+                <a href="{% url 'article-detail' post.pk %}">
+                    <div class="card flex-fill" style="width: 100%; height: 100%;">
+                        {% load random_image %}
+                            <img class="card-img-top" src="{% random_image "static/main_app/images/standard_post_images" %}">
+                        <div class="card-body flex-fill">
+                          <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}">{{post.title}}</a></h5>
+                          <p class="card-text" style="height: 90px;">{{ post.snippet }}</p>
+                            {% if post.author.first_name and post.author.last_name %}
+                                <p class="card-text mb-0" >
+                                    <small class="text-muted">
+                                        Author: <a href="{% url 'show-profile-page' post.author.userprofile.id %}">
+                                        {{post.author.first_name}} {{post.author.last_name}}</a>
+                                    </small>
+                                </p>
+                            {% else %}
+                                <p class="card-text mb-0" >
+                                    <small class="text-muted">
+                                        Author: <a href="{% url 'show-profile-page' post.author.userprofile.id %}">
+                                        {{post.author.username}}</a>
+                                    </small>
+                                </p>
+                            {% endif %}
+                            <p class="card-text mb-0"><small class="text-muted">{{post.publication_date}}</small></p>
+                            {% if user.is_authenticated %}
+                                {% if user.id == post.author.id %}
+                                    <a href="{% url 'update-post' post.pk %}">Edit |</a>
+                                    <a href="{% url 'delete-post' post.pk %}">Delete</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
-<ul>
-{% for post in object_list %}
-    <li>
-        <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
-        {% if post.author.first_name and post.author.last_name %}
-            - {{post.author.first_name}} {{post.author.last_name}} -
-        {% else %}
-            - {{post.author.username}} -
+<ul class="pagination justify-content-center">
+      {% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+          <a class="btn btn-outline-secondary mb-4" href="?page=1">First</a>
+          <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
         {% endif %}
 
-        <small>
-            <a href="{% url 'category' post.category|slugify %}">{{post.category}} </a> - {{post.publication_date}}
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <a class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a class="btn btn-outline-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+        {% endfor %}
 
-            {% if user.is_authenticated %}
-                {% if user.id == post.author.id %}
-                    <a href="{% url 'update-post' post.pk %}">Edit</a>
-                    |
-                    <a href="{% url 'delete-post' post.pk %}">Delete</a>
-                {% endif %}
-            {% endif %}
-        </small>
-        <br/>
-        {{ post.snippet }}
-        </li>
-{% endfor %}
+        {% if page_obj.has_next %}
+          <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+      {% endif %}
 </ul>
 
 {% endblock %}
