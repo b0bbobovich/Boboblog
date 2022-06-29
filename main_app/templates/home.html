@@ -9,7 +9,7 @@
                 <a href="{% url 'article-detail' post.pk %}">
                     <div class="card flex-fill" style="width: 100%; height: 100%;">
                         {% load random_image %}
-                            <img class="card-img-top" src="{% random_image "static/main_app/images/standard_post_images" %}">
+                            <img class="card-img-top" src="{{ STATIC_ROOT }}{% random_image "images/standard_post_images" %}">
                         <div class="card-body flex-fill">
                           <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}">{{post.title}}</a></h5>
                           <p class="card-text" style="height: 90px;">{{ post.snippet }}</p>
