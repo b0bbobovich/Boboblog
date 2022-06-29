@@ -2,6 +2,7 @@ import os
 import random
 from django import template
 from django.conf import settings
+from pathlib import Path
 
 register = template.Library()
 
@@ -13,16 +14,16 @@ def random_image(image_dir):
         valid_extensions = ['.jpg','.jpeg','.png','.gif',]
 
     if image_dir:
-        rel_dir = image_dir
+        rand_dir = Path(settings.RANDOM_IMAGE_DIR) / image_dir
 
     else:
-        rel_dir = settings.STATIC_ROOT
-
-    rand_dir = os.path.join(settings.STATIC_ROOT, rel_dir)
+        rand_dir = Path(settings.STATIC_ROOT) / image_dir
 
     files = [f for f in os.listdir(rand_dir) if os.path.splitext(f)[1] in valid_extensions]
 
-    return os.path.join(rel_dir, random.choice(files))
+    result = Path(rand_dir) / random.choice(files)
+    print(result)
+    return result
 
 
 

@@ -120,10 +120,8 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
 MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'users_uploads_files')
 
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+RANDOM_IMAGE_DIR = os.path.join(BASE_DIR, 'main_app/static/')
+RANDOM_IMAGE_EXTENSIONS = ['.jpg','.jpeg','.png','.gif',]
 
 
 
