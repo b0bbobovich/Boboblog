@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = ['*']
@@ -120,7 +120,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
 MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'users_uploads_files')
 
-RANDOM_IMAGE_DIR = os.path.join(BASE_DIR, 'main_app/static/')
+RANDOM_IMAGE_DIR = os.path.join(BASE_DIR, 'main_app/')
 RANDOM_IMAGE_EXTENSIONS = ['.jpg','.jpeg','.png','.gif',]
 
 

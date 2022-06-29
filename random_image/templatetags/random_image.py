@@ -21,8 +21,8 @@ def random_image(image_dir):
 
     files = [f for f in os.listdir(rand_dir) if os.path.splitext(f)[1] in valid_extensions]
 
-    result = Path(rand_dir) / random.choice(files)
-    print(result)
+    result = Path(image_dir) / random.choice(files)
+
     return result
 
 
