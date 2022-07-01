@@ -43,7 +43,7 @@ class AuthDataProfileForm(auth_forms.UserChangeForm):
 
     class Meta:
         model = auth_models.User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', ]
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
 #
 #
 #class UsersDataProfileForm(basic_forms.ModelForm):

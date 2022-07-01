@@ -12,25 +12,41 @@ def get_choice_list():
 class PostForm(basic_forms.ModelForm):
     class Meta:
         model = my_models.Post
-        fields = ['title', 'title_tag', 'author', 'category', 'body', 'snippet', 'header_image']
+        fields = ['title', 'author', 'category', 'body', 'snippet', 'header_image']
 
         widgets = {
-            'title': basic_forms.TextInput(attrs={"class": 'form-control', 'placeholder': 'Enter the title of your post here'}),
-            'title_tag': basic_forms.TextInput(attrs={"class": 'form-control'}),
-            'author': basic_forms.TextInput(attrs={"class": 'form-control', 'value': '', 'id': 'user_id', 'type': 'hidden'}),
-            'category': basic_forms.Select(choices=get_choice_list(), attrs={"class": 'form-control'}),
-            'body': basic_forms.Textarea(attrs={"class": 'form-control'}),
-            'snippet': basic_forms.Textarea(attrs={"class": 'form-control'})
+            'title': basic_forms.TextInput(attrs={
+                "class": 'form-control',
+                'placeholder': 'Enter post title here',
+                'required': 'required',
+                'onkeyup': "textCounter(this,'counter1',255)"}),
+            'author': basic_forms.TextInput(attrs={
+                "class": 'form-control',
+                'value': '',
+                'id': 'user_id',
+                'type': 'hidden'}),
+            'category': basic_forms.Select(choices=get_choice_list(), attrs={
+                "class": 'form-control'}),
+            'body': basic_forms.Textarea(attrs={
+                "class": 'form-control',
+                'required': 'required'}),
+            'snippet': basic_forms.TextInput(attrs={
+                "class": 'form-control',
+                'placeholder': 'Enter post description for home page ',
+                'required': 'required',
+                'onkeyup': "textCounter(this,'counter2',100)"})
         }
+
+        header_image = basic_forms.ImageField(
+            label='Header image for your post')
 
 class EditForm(basic_forms.ModelForm):
     class Meta:
         model = my_models.Post
-        fields = ['title', 'title_tag', 'category', 'body', 'snippet', 'header_image']
+        fields = ['title', 'category', 'body', 'snippet', 'header_image']
 
         widgets = {
             'title': basic_forms.TextInput(attrs={"class": 'form-control'}),
-            'title_tag': basic_forms.TextInput(attrs={"class": 'form-control'}),
             'category': basic_forms.Select(choices=get_choice_list(), attrs={"class": 'form-control'}),
             'body': basic_forms.Textarea(attrs={"class": 'form-control'}),
             'snippet': basic_forms.Textarea(attrs={"class": 'form-control'})

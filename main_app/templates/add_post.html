@@ -1,26 +1,75 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Create A New Blog Post!
+    New Blog Post!
 {% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
-    <h1>Add blog post</h1>
-    <br/><br/>
-    <div class="form-group">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.media }}
-            {{ form.as_p }}
-            <button class="btn btn-secondary">Post</button>
-        </form>
+    <div class="container">
+        <h1 class="mb-5">Add blog post</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+                <div class="form-group mb-4">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                    <p class="form-text text-muted" id="counter1">255 characters remaining</p>
+                </div>
+                <div class="form-group mb-4">
+                    {{ form.category.label_tag }}
+                    {{ form.category }}
+                </div>
 
-    </div>
-    <script>
-        var name = "{{ user.id }}";
-        document.getElementById("user_id").value = name;
-    </script>
+                <div class="form-group mb-0">
+                    {{ form.body.label_tag }}
+                </div>
+
+                <div class="form-group mb-4">
+                    {{ form.body }}
+                </div>
+
+                <div class="form-group mb-1">
+                    <label>Header image for your post:</label>
+                </div>
+
+                <div class="form-group mb-4">
+                    {{ form.header_image }}
+                </div>
+
+                <div class="form-group mb-4">
+                    {{ form.snippet.label_tag }}
+                    {{ form.snippet }}
+                    <p class="form-text text-muted" id="counter2">100 characters remaining</p>
+                </div>
+
+                <button class="btn btn-secondary mb-5">Post</button>
+
+            </form>
+        </div>
+
+        <script>
+            var name = "{{ user.id }}";
+            document.getElementById("user_id").value = name;
+        </script>
+        <script>
+            function textCounter(field, field2, maxlimit) {
+              console.log(field);
+              console.log(field2);
+              console.log(maxlimit);
+
+              var paragraph = document.getElementById(field2);
+
+              if (field.value.length > maxlimit) {
+                field.value = field.value.substring(0, maxlimit);
+                return false;
+              } else {
+                var value = maxlimit - field.value.length;
+                paragraph.textContent = `${value} characters remaining`
+              }
+            }
+        </script>
+
 {% else %}
 <h2>Login to your account to add new posts!</h2>
 <br/><br/>
