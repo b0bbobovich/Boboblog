@@ -16,7 +16,7 @@ def Category(request, catg_id):
 
 
 def CategoryList(request):
-    category_menu_list = my_models.Category.objects.values('name')
+    category_menu_list = my_models.Category.objects.all()
     print(category_menu_list)
     return render(request, 'category_list.html', {'category_menu_list': category_menu_list})
 
