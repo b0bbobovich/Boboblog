@@ -8,14 +8,16 @@ from . import models as my_models
 from . import forms as my_forms
 
 
-def Category(request, catg_name):
-    category_posts = my_models.Post.objects.filter(category=catg_name.replace('-', ' '))
+def Category(request, catg_id):
+    category_posts = my_models.Post.objects.filter(category=catg_id)
+    category_name = my_models.Category.objects.filter(id=catg_id).get()
     return render(request, 'category.html',
-                  {'catg_name': catg_name.title().replace('-', ' '), 'category_posts': category_posts})
+                  {'catg_name': category_name, 'category_posts': category_posts}) #.replace('-', ' '), 'category_posts': category_posts})
 
 
 def CategoryList(request):
-    category_menu_list = my_models.Category.objects.all()
+    category_menu_list = my_models.Category.objects.values('name')
+    print(category_menu_list)
     return render(request, 'category_list.html', {'category_menu_list': category_menu_list})
 
 

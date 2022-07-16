@@ -3,7 +3,7 @@ from . import models as my_models
 
 
 def get_choice_list():
-    choices = my_models.Category.objects.all().values_list('name', 'name')
+    choices = my_models.Category.objects.all().values_list('id', 'name')
     choice_list = []
     for item in choices:
         choice_list.append(item)
@@ -43,7 +43,7 @@ class PostForm(basic_forms.ModelForm):
 class EditForm(basic_forms.ModelForm):
     class Meta:
         model = my_models.Post
-        fields = ['title', 'category', 'body', 'snippet', 'header_image']
+        fields = ['title', 'body', 'category', 'snippet', 'header_image']
 
         widgets = {
             'title': basic_forms.TextInput(attrs={"class": 'form-control'}),

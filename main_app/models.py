@@ -5,17 +5,25 @@ from django.urls import reverse
 from ckeditor.fields import RichTextField
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('home')
+
+
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)
     publication_date = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=255, default='uncategorized')
     snippet = models.CharField(max_length=100, null=True, blank=True)
     likes = models.ManyToManyField(User, related_name='blog_posts')
     header_image = models.ImageField(null=True, blank=True, upload_to='images/')
-
-
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, blank=True)
 
     def total_likes(self):
         return self.likes.count()
@@ -25,16 +33,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('article-detail', args=(str(self.id), ))
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('home')
 
 
 class UserProfile(models.Model):
