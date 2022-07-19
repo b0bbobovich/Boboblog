@@ -10,6 +10,7 @@
         <h1 class="mb-5">Add blog post</h1>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+                {{ form.author }}
                 {{ form.media }}
                 <div class="form-group mb-4">
                     {{ form.title.label_tag }}
@@ -43,6 +44,7 @@
                     <p class="form-text text-muted" id="counter2">100 characters remaining</p>
                 </div>
 
+
                 <button class="btn btn-secondary mb-5">Post</button>
 
             </form>
@@ -50,9 +52,7 @@
 
         <script>
             var name = "{{ user.id }}";
-            if (document.getElementById("user_id")) {
-                document.getElementById("user_id").value = name;
-                }
+            document.getElementById("user_id").value = name;
         </script>
         <script>
             function textCounter(field, field2, maxlimit) {
