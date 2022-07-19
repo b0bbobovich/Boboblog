@@ -38,7 +38,7 @@ class Home(ListView):
     template_name = 'home.html'
     ordering = ['-publication_date']
 
-    paginate_by = 12
+    paginate_by = 8
 
     def get_context_data(self, *args, **kwargs):
         catg_menu = my_models.Category.objects.all()

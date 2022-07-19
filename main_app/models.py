@@ -21,7 +21,7 @@ class Post(models.Model):
     body = RichTextField(blank=True, null=True)
     publication_date = models.DateField(auto_now_add=True)
     snippet = models.CharField(max_length=100, null=True, blank=True)
-    likes = models.ManyToManyField(User, related_name='blog_posts')
+    likes = models.ManyToManyField(User, related_name='blog_posts', null=True, blank=True)
     header_image = models.ImageField(null=True, blank=True, upload_to='images/')
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, blank=True)
 

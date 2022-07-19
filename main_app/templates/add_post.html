@@ -50,7 +50,9 @@
 
         <script>
             var name = "{{ user.id }}";
-            document.getElementById("user_id").value = name;
+            if (document.getElementById("user_id")) {
+                document.getElementById("user_id").value = name;
+                }
         </script>
         <script>
             function textCounter(field, field2, maxlimit) {
